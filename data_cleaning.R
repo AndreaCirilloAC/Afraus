@@ -3,6 +3,7 @@
 # read file, CSV only
 path  <-  "data.csv"
 data <- data.frame(read.csv(path,sep = ";", header = TRUE))
+data[,1] <- as.Date(data[,1])
 # check file properties raising appropriate exception
   #two columns?
 if(ncol(data)!=2){
@@ -10,7 +11,7 @@ if(ncol(data)!=2){
 }
 
 #dates on first column?
-if(is.numeric(data[,1])==FALSE&is.date(data[1,1])==FALSE){
+if(is.numeric(data[,1])==FALSE & is.date(data[1,1])==FALSE){
   stop(paste("the loaded dataset doestn't contain neither dates nor numbers 
 on the second column. 
 Please provide a dataset with numbers on that column"))
@@ -22,5 +23,5 @@ Please provide a dataset with numbers on that column"))
 }
 #do some wrangling  
   # sort descending
-data <- data[order(-data[,1]),]
+data <- data[order(data[,1]),]
 
