@@ -1,5 +1,6 @@
 library(lubridate)
 library(assertthat)
+library(DMwR)
 # main script calling all other scripts
 
 #run data_cleaning
@@ -7,7 +8,7 @@ source("data_cleaning.R")
 #run benford_script
 source("benford_script.R")
 #run control_script
-
+source("control_script.R")
 #run lof_script
 source("lof_script.R")
 #run afraus_score
