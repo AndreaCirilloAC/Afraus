@@ -30,7 +30,7 @@ test_table <- merge(benf_distr,percent_distr, by="digit",all.x=TRUE)
 
 # compute z-statistic
 test_table$z <- (abs(test_table$real_freq-test_table$benf_freq)-1/(2*nrow(data)))/dev
-test_table$pvalue <- pnorm(-abs(z))
+test_table$pvalue <- pnorm(-abs(test_table$z))
 
 # match records with difference
 
@@ -40,6 +40,6 @@ data              <- merge( data,test_table, by= "digit",all.x=TRUE)
 # compute score
 #remove all added columns excepts score column
 
-data           <- data.frame(data[,2:3],data[,6]) 
-colnames(data) <- c("date","value","benford_difference(%)") 
+data           <- data.frame(data[,2:3],data[,7]) 
+colnames(data) <- c("date","value","benford_significance") 
 }
