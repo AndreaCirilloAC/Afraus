@@ -14,7 +14,8 @@ LCL  <-   central_limit -3*(moving_range/1.128)
 # score is 0
 #esle
 # score is the difference
-control_scoring   <- function(n,upper_control_limit,lower_control_limit,central_limit){
+control_scoring   <- function(n,upper_control_limit,
+                              lower_control_limit,central_limit){
 if (n>UCL|n<LCL){
   dist <- abs(n-central_limit)
 }else{0}
