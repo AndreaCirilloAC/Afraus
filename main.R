@@ -6,12 +6,24 @@ library(parallel)
 # main script calling all other scripts
 
 #run data_cleaning
-source("data_cleaning.R")
+
+source("scripts/data_cleaning.R")
+gc()
 #run benford_script
-source("benford_script.R")
+
+source("scripts/benford_script.R")
+gc()
 #run control_script
-source("control_script.R")
+
+source("scripts/control_script.R")
+gc()
 #run lof_script
-source("lof_script.R")
+
+source("scripts/lof_script.R")
+gc()
 #run afraus_score
-source("afraus_score.R")
+
+source("scripts/afraus_score.R")
+gc()
+
+plot(hist(data$afraus_score))

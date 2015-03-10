@@ -1,7 +1,7 @@
 
 # data cleaning script, taking user-data.frame and giving a data.frame usable for afraus score
 # read file, CSV only
-path  <-  "data.csv"
+path  <-  "data/data.csv"
 data <- data.frame(read.csv(path,sep = ";", header = TRUE))
 #data <- data[1:100000,]
 data[,1] <- as.Date(data[,1])
@@ -28,3 +28,4 @@ Please provide a dataset with numbers on that column"))
   # sort descending
 data <- data[order(data[,1]),]
 
+colnames(data) <- c("date","value")
