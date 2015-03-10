@@ -3,7 +3,10 @@
 # read file, CSV only
 path  <-  "data.csv"
 data <- data.frame(read.csv(path,sep = ";", header = TRUE))
+#data <- data[1:100000,]
 data[,1] <- as.Date(data[,1])
+# filter in order to consider only first six months
+data <- subset(data,data[,1]<="2010-03-31")
 # check file properties raising appropriate exception
   #two columns?
 if(ncol(data)!=2){

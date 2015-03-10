@@ -42,4 +42,3 @@ data              <- merge( data,test_table, by= "digit",all.x=TRUE)
 
 data           <- data.frame(data[,2:3],data[,7]) 
 colnames(data) <- c("date","value","benford_significance") 
-}
