@@ -1,4 +1,5 @@
-# calculate the central limit for the numeric variable as the records average
+# calculate the central limit for the numeric 
+variable as the records average
 central_limit <- mean(data[,2])
 
 n_1           <- data[-1,2]

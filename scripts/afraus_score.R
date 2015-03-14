@@ -18,7 +18,7 @@
 # benford
 
 benford_scorer <- function(number){
-                                        #if pvalue is more than 0.005 0 is assigned
+    #if pvalue is more than 0.005 0 is assigned
     result <- c()
     if(number>0.05|is.na(number)){
     result <- 0
@@ -42,7 +42,8 @@ control_scorer <- function(number,UCL,LCL,maxnum,minnum){
 # lof_score
 
 lof_scorer <- function(number){
-  maxnum <- max(subset(data$lof,is.infinite(data$lof)==FALSE&is.nan(data$lof)==FALSE&is.na(data$lof)==FALSE))
+  maxnum <- max(subset(data$lof,is.infinite(data$lof)==FALSE&is.nan(data$lof)==FALSE&
+                         is.na(data$lof)==FALSE))
   result <- c()
   if(number<1|is.na(number)|is.nan(number)|is.infinite(number)){
     result <- 0
@@ -52,9 +53,10 @@ lof_scorer <- function(number){
 
 #compute scores
 data$benford_score <- sapply(data$benford_significance,benford_scorer)
-data$control_score <- sapply(data$value,control_scorer,UCL,LCL,max(data$value, na.rm=TRUE),min(data$value,na.rm=TRUE))
+data$control_score <- sapply(data$value,control_scorer,UCL,LCL,max(data$value, na.rm=TRUE),
+                             min(data$value,na.rm=TRUE))
 data$lof_score     <- sapply(data$lof,lof_scorer)
 
-# compute total score
+# compute total score giving a lighter weigth to benford_score than other scores.
 
 data$afraus_score <- data$benford_score*0.2+data$control_score*0.4+data$lof_score*0.4

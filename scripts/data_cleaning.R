@@ -1,5 +1,6 @@
 
-# data cleaning script, taking user-data.frame and giving a data.frame usable for afraus score
+# data cleaning script, taking user-data.frame and giving a data.frame 
+# usable for afraus score
 # read file, CSV only
 path  <-  "data/data.csv"
 data <- data.frame(read.csv(path,sep = ";", header = TRUE))
