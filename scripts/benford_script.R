@@ -36,5 +36,5 @@ data              <- merge( data,test_table, by= "digit",all.x=TRUE)
 # compute score
 #remove all added columns excepts score column
 
-data           <- data.frame(data[,2:3],data[,7]) 
+data           <- data.frame(data[,2:4],data[,7]) 
 colnames(data) <- c("date","value","benford_significance") 
