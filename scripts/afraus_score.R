@@ -47,6 +47,7 @@ lof_scorer <- function(number){
   result <- c()
   if(number<1|is.na(number)|is.nan(number)|is.infinite(number)){
     result <- 0
+
   }else{result <- abs((number-1)/(maxnum-1))}
   return(result)
 }
@@ -59,5 +60,5 @@ data$lof_score     <- sapply(data$lof,lof_scorer)
 
 # compute total score giving a lighter weigth to benford_score and Lof than control chart.
 
-data$afraus_score <- data$benford_score*0.1+data$control_score*0.6+data$lof_score*0.3
-data$score_filter <- data$afraus_score>0
+data$afraus_score <- data$benford_score*0.2+data$control_score*0.4+data$lof_score*0.4
+data$score_filter <- data$afraus_score>0.5

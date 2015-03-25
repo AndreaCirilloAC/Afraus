@@ -26,7 +26,4 @@ gc()
 source("scripts/afraus_score.R")
 gc()
 
-plot(hist(data$afraus_score))
-plot(data$value,data$afraus_score)
-data <- data[order(-data[,8]),]
-write.table(data,"results.csv",sep=";",dec=",")
+

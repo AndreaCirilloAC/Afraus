@@ -29,4 +29,5 @@ Please provide a dataset with numbers on that column"))
   # sort descending
 data <- data[order(data[,1]),]
 
-colnames(data) <- c("date","value","esito")
+colnames(data) <- c("date","value","test")
+
