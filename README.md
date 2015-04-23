@@ -1,5 +1,5 @@
 # Afraus
-##unsupervised multi-model fraud-detection algorithm
+##An unsupervised multi-model fraud-detection algorithm
 
 Afraus is builted on three unsupervised models:
 
@@ -10,14 +10,14 @@ Afraus is builted on three unsupervised models:
 ## Design
 
 Afraus sequentially applies the three cited models consequently assigning a fraud-risk score.
-Eventually a total score is calculated for each record, and the score is assigned to the *Afraus-score* variable.
+Eventually, a total score is calculated for each record, and the score is assigned to the *Afraus-score* variable.
 
 ## Objectives
-The main objective on developing Afraus is to build a tool that can be easily used from 
-non-techinal people to detect frauds that may be occuring within their data.
+The main objective in developing Afraus is to build a tool that can be easily used from 
+'non-techinal' people to detect frauds that may be occuring within their data.
 
 This objective is pursued choosing only unsupervised models, that require no previous knowledge of possible
-fraud schemes affecting the tested population.
+fraud schemes affecting the tested population, and no further specification by the user.
 
 ## Further Developments
 
