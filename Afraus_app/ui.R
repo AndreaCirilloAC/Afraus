@@ -1,0 +1,160 @@
+
+
+shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, width = 25),id="bar",
+                   tabPanel("home",      
+                   div(style=" text-align: center;",
+                       h3("Fraud costs the world 3.7 trillion every year."),
+                       h2("Afraus brings to you the power of data analysis and lets you discover frauds
+                          affecting your numbers"),
+                       br(),
+                       br(),
+                       img(src = "logo.png", height = 100, width = 100,align="center")
+                       ),                   
+                   br(),
+                   br(),
+                   div(
+                              style=" text-align: center;",                             
+                              bsButton("gofind", label="find the fraud",  style = "warning",
+                                       size = "large", disabled = FALSE,
+                                       value = FALSE)),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   div(style=" text-align: center;",
+                       fluidRow(
+                       column(4,
+                       img(src = "upload.png", height = 100, width = 100,align="center"),
+                       h3("1. Load your data into Afraus ( privacy mode on)")),
+                       column(4,
+                       img(src = "pulse.png", height = 100, width = 100,align="center"),
+                   h3("2. Find if any fraud may be occuring")),
+                   column(4,
+                   img(src = "paper.png", height = 100, width = 100,align="center"),
+                   h3("3. Discover which records may be affected by fraud")))
+                   
+                        
+              
+                   )
+                   ),
+                   tabPanel("Find the Fraud",
+                            fluidRow(
+                            column(4,fileInput("inputdata", h4("load file"),
+                                                        multiple = FALSE)
+                                            ),
+                                     column(8,h4("Afraus puts togheter the best unsipervised models to let you spot
+                                                 frauds that are affecting your numbers."),
+                                                 h4("You don't have to know anything about data analysis
+                                                 and fraud schemes: just load your data, press 'Show me the fraud' and look what happens."),
+                                                 h4("More details about the math behind Afraus are provided within the 'about' page."))),
+                          fluidRow(
+                            div(style="text-align: center;",
+                           br(),
+                           br(),
+                           
+                          column(12, actionButton("findbutton", "Show me the fraud")))),
+                          br(),
+                          br(),
+                           h4("Afraus score distribution"),
+                           p("Afraus score is an index going from 1 to 100 expressing the likelihood of that particular record being affected by fraud."),
+                           p("An afraus score bigger than 50 (0.5) states that the record is more likely to be generating from fraud that not."),
+                           div(style="text-align: center;",
+                           fluidRow(
+                               column(12,plotOutput("afraus_plot")))),
+                          h4("Afraus score correlation"),
+                          p("find below two charts showing the correlation between afraus score and time ( left chart) and between afraus score and value (right chart)"),
+                          div(style="text-align: center;",
+                           fluidRow(
+                           column(8,plotOutput("afraus_plot_cor_mod")),
+                           column(4,plotOutput("afraus_plot_cor")))),
+                           div(
+                             style=" text-align: center;",  
+                             fluidRow(
+                             column(12,bsButton("godetails", label="see wich records are breaking the rules",  style = "warning",
+                                      size = "large", disabled = FALSE,
+                                      value = FALSE))))
+                           ),
+                            
+                    tabPanel("How it works",
+                             div(
+                               style=" text-align: center;",  
+                             fluidRow(column(4),
+                                      column(4,
+                               h2("how Afraus works")),
+                               column(4)
+                               ),
+                             fluidRow(
+                               column(4),
+                               column(4,img(src = "eye.png", height = 100, width = 100,align="center"),
+                                          h4("fraudster usually leaves tracks behind them, generating
+                                          numbers that breaks statistics laws and rules.")),
+                               column(4)),
+                               fluidRow(
+                                 column(4),
+                             column(4,img(src = "podium.png", height = 100, width = 100,align="center"),
+                                      h4("those laws and rules are applicable to nearly all kind of data, no
+                                          matter the business domain that generated them.")),
+                             column(4)),
+                             fluidRow(
+                               column(4),
+                             column(4,    img(src = "thunderstorm.png", height = 100, width = 100,align="center"),
+                                          h4("Afraus looks for those numbers that breaks laws and rules, giving you an hint on where to look
+                                          to discover frauds affecting your number.")),
+                                    column(4))),
+                                   br(),
+
+                             fluidRow(
+                               column(2),
+                               column(8,
+                                      h3("inside the math"),
+                                      br(),
+                                      br(),
+                                      
+                                      h4(" Have you noticed that Afraus didn't ask you for any specification or parameter?"),
+                                      p("This is made possibile by the use of unsupervised algorithms and models. Afraus is based on the following three models:"),
+                                      tags$b("Benford's Law"),
+                                     p("this model tests the data against a theorical distribution of first digits, 
+                                        highlighting those records that significantly deviates from that distribution. This test has proven to be effective for the most
+                                        different kinds of anomaly detection, from tax frauds to social network suspicious behaviour. Generally speaking, Benford's
+                                       law is really good at looking for manipulation on datasets as a whoole. Afraus knows that, and use it to understand how
+                                       'clean' is the population of data you loaded."),
+                                     br(),
+                                     br(),
+                                     div(
+                                       style=" text-align: center;",  
+                                     img(src = "benford.png",width = "40%",align="center")),
+                                      tags$b("Control Chart"),
+                                      p("Control charts are known as a reliable tools for statistical process controll. those kind of models derive from data a center line
+                                        an upper and a lower bound, highlighting as out of control all records out of those limits. Afraus leverage
+                                        the robustness of those charts to identify atypical data"),
+                                     br(),
+                                     br(),
+                                     div(
+                                       style=" text-align: center;",  
+                                     img(src = "control_chart.png",width = "40%",align="center")),
+                                      tags$b("Local Outlier Factor"),
+                                     p("Local Outlier Factor is a k-NN algorithm, based on the concept of density: the more isolated is a record,
+                                       the highier is the likelihood it is orignating from fraud. Afraus use the LOF to intercept isolated values."),
+                                      p("At the end of each model processing a subscore is applied, going from 1 to 100. 
+                                        Those score are then averaged in order to obtain the Afraus score"),
+                                     br(),
+                                     br(),
+                                     div(
+                                       style=" text-align: center;",  
+                                     img(src = "lof.png",width = "40%",align="center")),
+                               tags$b("the final score"),
+                               p("In giving the final score, Afraus leverages the concept of 'complementarity'. 
+                                 This concepts assumes that complementary models, applied togheter can give better results than single models on their own."),
+                               p("This concept leads Afraus to calculate the Afraus score as a weighted average of the score deriving from the other models.")
+                               
+                                      ))
+                    
+                             ),
+                   
+                   windowTitle="Afraus"
+  
+  ))
