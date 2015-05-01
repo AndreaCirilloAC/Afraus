@@ -1,6 +1,7 @@
 # Afraus
-##An unsupervised multi-model fraud-detection algorithm
 
+##An unsupervised multi-model fraud-detection algorithm
+try it at https://afraus.shinyapps.io/Afraus_app/
 Afraus is builted on three unsupervised models:
 
 - *Benford Law's test*, which test the population of data against the benford
