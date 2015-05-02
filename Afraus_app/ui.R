@@ -1,7 +1,16 @@
-
+library(lubridate)
+library(assertthat)
+library(DMwR)
+library(shinyBS)
+library(shinythemes)
+library(shiny)
+library(ggplot2)
+library(RCurl)
 
 shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, width = 25),id="bar",
-                   tabPanel("home",      
+                   
+                   tabPanel("home",
+                                  
                    div(style=" text-align: center;",
                        h3("Fraud costs the world 3.7 trillion every year."),
                        h2("Afraus brings to you the power of data analysis and lets you discover frauds
@@ -12,20 +21,12 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
                        ),                   
                    br(),
                    br(),
-                   div(
-                              style=" text-align: center;",                             
-                              bsButton("gofind", label="find the fraud",  style = "warning",
+                   div(style=" text-align: center;",                             
+                              bsActionButton("gofind", label="find the fraud",  style = "warning",
                                        size = "large", disabled = FALSE,
-                                       value = FALSE)),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   div(style=" text-align: center;",
+                                       )),
+                   br(),br(),br(),br(),br(),br(),
+                   div(style=" text-align: center;",                  
                        fluidRow(
                        column(4,
                        img(src = "upload.png", height = 100, width = 100,align="center"),
@@ -33,30 +34,83 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
                        column(4,
                        img(src = "pulse.png", height = 100, width = 100,align="center"),
                    h3("2. Find if any fraud may be occuring")),
+                   
                    column(4,
                    img(src = "paper.png", height = 100, width = 100,align="center"),
-                   h3("3. Discover which records may be affected by fraud")))
-                   
-                        
-              
+                   h3("3. Discover which records may be affected by fraud")))    
                    )
                    ),
                    tabPanel("Find the Fraud",
-                            fluidRow(
-                            column(4,fileInput("inputdata", h4("load file"),
-                                                        multiple = FALSE)
-                                            ),
-                                     column(8,h4("Afraus puts togheter the best unsipervised models to let you spot
+                            div(
+                              style=" text-align: center;",
+                              h1("Apply Afraus to your data")),
+                            br(),br(),br(),br(), br(),
+                            fluidRow(     
+                            column(6,
+                                   br(),
+                                   br(),
+                                   h4("Afraus puts togheter the best unsupervised models to let you spot
                                                  frauds that are affecting your numbers."),
-                                                 h4("You don't have to know anything about data analysis
+                                   h6("More details about the math behind Afraus are provided within the 'about' page."),
+                                   h6("at the moment only .csv file are supported"),
+                                   h3("load your data (or select demo mode)"),
+                                   div(
+                                     style=" text-align: center;", 
+                                   img(src = "upload.png",  width = "30%",align="center"),
+                                   br(),
+                                   #actionButton("browse", "Upload your File"),
+                                   fileInput('load',"") ,
+                                   bsToggleButton("demo","try a demo")
+                                   )       ),
+                                     column(6,
+                                            img(src = "sceen_upload.png", width = "100%" ,align="center")                                           
+                                                )
+                            ),
+                            br(),
+                            br(),
+                            br(),                 
+                            fluidRow(      
+                              column(6,
+                                     img(src = "codescreen.png", width = "100%" ,align="center")
+                                     ),
+                              column(6,
+                                     h3("Apply Afraus"),
+                                     h4("You don't have to know anything about data analysis
                                                  and fraud schemes: just load your data, press 'Show me the fraud' and look what happens."),
-                                                 h4("More details about the math behind Afraus are provided within the 'about' page."))),
-                          fluidRow(
-                            div(style="text-align: center;",
-                           br(),
-                           br(),
-                           
-                          column(12, actionButton("findbutton", "Show me the fraud")))),
+                                     div( style=" text-align: center;", 
+                                     img(src = "pulse.png",width = "30%",align="center"),
+                                     br(),
+                                     bsActionButton("findbutton", "Show me the fraud",style="primary"),
+                                     br(),
+                                     br(),
+                                     bsProgressBar("progress",value=0,
+                                                   color="success" ,
+                                                   visible=TRUE,
+                                                   animate =TRUE))
+                                    )),
+                            
+                            br(),
+                            br(),
+                            fluidRow(
+                              div(
+                                style=" text-align: center;",  
+                              h2("watch results")
+                                
+                              )),
+                            hr(),
+                            fluidRow(
+                              div(
+                                style=" text-align: center;", 
+                              column(6,
+                                     h3("Afraus response"),
+                                     h1(textOutput('response'))     
+                                     ),
+                              column(6,
+                                     h3("probability of fraud presence"),
+                                     h1(textOutput('probability'))
+                                     ))),
+                          hr(),
+                          
                           br(),
                           br(),
                            h4("Afraus score distribution"),
@@ -84,27 +138,27 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
                                style=" text-align: center;",  
                              fluidRow(column(4),
                                       column(4,
-                               h2("how Afraus works")),
+                               h1("How Afraus works")),
                                column(4)
                                ),
                              fluidRow(
-                               column(4),
-                               column(4,img(src = "eye.png", height = 100, width = 100,align="center"),
+                               column(2),
+                               column(8,img(src = "eye.png", height = 100, width = 100,align="center"),
                                           h4("fraudster usually leaves tracks behind them, generating
                                           numbers that breaks statistics laws and rules.")),
-                               column(4)),
+                               column(2)),
                                fluidRow(
-                                 column(4),
-                             column(4,img(src = "podium.png", height = 100, width = 100,align="center"),
+                                 column(2),
+                             column(8,img(src = "podium.png", height = 100, width = 100,align="center"),
                                       h4("those laws and rules are applicable to nearly all kind of data, no
                                           matter the business domain that generated them.")),
-                             column(4)),
+                             column(2)),
                              fluidRow(
-                               column(4),
-                             column(4,    img(src = "thunderstorm.png", height = 100, width = 100,align="center"),
+                               column(2),
+                             column(8,    img(src = "thunderstorm.png", height = 100, width = 100,align="center"),
                                           h4("Afraus looks for those numbers that breaks laws and rules, giving you an hint on where to look
                                           to discover frauds affecting your number.")),
-                                    column(4))),
+                                    column(2))),
                                    br(),
 
                              fluidRow(
@@ -149,12 +203,11 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
                                tags$b("the final score"),
                                p("In giving the final score, Afraus leverages the concept of 'complementarity'. 
                                  This concepts assumes that complementary models, applied togheter can give better results than single models on their own."),
-                               p("This concept leads Afraus to calculate the Afraus score as a weighted average of the score deriving from the other models.")
-                               
+                               p("This concept leads Afraus to calculate the Afraus score as a weighted average of the score deriving from the other models.")     
                                       ))
-                    
+       
                              ),
-                   
+                   includeScript("jivo.js"),  
                    windowTitle="Afraus"
   
   ))

@@ -1,29 +1,78 @@
 
-'library(GGally)'
-'library(gpairs)'
 shinyServer(function(input, output,session) {
+  ####
+{
+  # deprecated
+  # observe({
+  #  if (input$browse == 0) return()else{
+  #  updateTextInput(session, "pathpointer",  value = file.choose())}
+  #  })
+}
+observe({
+  if(input$demo) updateButton(session,"demo",style="success") else
+  {updateButton(session,"demo",style="primary")}
+  
+})
+
+  
 # assigning the loaded file to a data.frame
-  path<- reactive({
-    file <-  input$inputdata  
-    file <- read.csv(file$datapath,header= TRUE,sep=";")          
+  path<- reactive({   
+      if (input$load == 0) return()else{
+         file <-  input$load   
+         file <- read.table(file$datapath,header= TRUE,sep=";")}          
   })
-  
-  # plot representing afraus_score distribution
-output$afraus_plot <- renderPlot({
-  
-  if(input$findbutton){
-  data <- data.frame(path())
- 
- isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-  m <- ggplot(data, aes(x=afraus_score ))
-  m + geom_histogram(aes(fill = ..count..))+
-    geom_density()
+# instruction to obtain the general response and the overall probability
+# response
+
+output$response     <- renderText({
+  if (input$findbutton == 0) return()else{
+{
+  if(input$demo==TRUE){
+    data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+      data <- data.frame(path())}
+  isolate({ source("main.R",local =TRUE, verbose = TRUE)})
+  if(sum(data$afraus_score)>0){return(c("Fraud may be occuring on your data"))}
+  else{("Afraus didn't find any fraus track")}
+}
+  }})
+# probability
+output$probability <- renderText({
+  if (input$findbutton == 0) return()else{
+{
+  if(input$demo==TRUE){
+    data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+  data <- data.frame(path())}
+  isolate({ source("main.R",local =TRUE, verbose = TRUE)})
+  paste(round(median(data$afraus_score)*100,0),"%",sep="")}}
+})  
+# plot representing afraus_score distribution
+  output$afraus_plot <- renderPlot({
+      if(input$findbutton == 0)return()else{
+       withProgress(message= 'Afraus is working',
+                     detail = 'calculation time depends on data size',value = 0,{
+        if(input$demo==TRUE){
+          
+          data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+            data <- data.frame(path())}
+        incProgress(30)
+         isolate({ source("main.R",local =TRUE, verbose = TRUE)})
+        incProgress(70)
+         m    <- ggplot(data, aes(x=afraus_score ))
+        incProgress(100)
+        
+        Sys.sleep(0.5)
+         m + 
+         geom_histogram(aes(fill = ..count..))+
+         geom_density()
+       
+       })
   }
 })
-output$afraus_plot_cor <- renderPlot({
-  
+output$afraus_plot_cor <- renderPlot({ 
   if(input$findbutton){
-    data <- data.frame(path())
+    if(input$demo==TRUE){
+      data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+        data <- data.frame(path())}
     isolate({ source("main.R",local =TRUE, verbose = TRUE)})
     m <- ggplot(data, aes(x=afraus_score,y=value,color=value))
     m +  geom_point(shape=1)
@@ -31,17 +80,21 @@ output$afraus_plot_cor <- renderPlot({
 })
 output$afraus_plot_cor_mod <- renderPlot({
   
-  if(input$findbutton){
-    data <- data.frame(path())
+  if(input$findbutton == 0)return()else{
+    if(input$demo==TRUE){
+      data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+        data <- data.frame(path())}
     isolate({ source("main.R",local =TRUE, verbose = TRUE)})
     m <- ggplot(data, aes(x=date,y=afraus_score,color=value))
     m +  geom_point(shape=1)
   }
 })
+
 # instruction to make the 'find the fraud' button work
 observe({
   if(input$gofind){
-  
- isolate(updateTabsetPanel(session, "bar", selected = "Find the Fraud"))}
+updateTabsetPanel(session, "bar", selected = "Find the Fraud")
+}
+ 
 })
 })

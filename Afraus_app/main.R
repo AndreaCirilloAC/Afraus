@@ -1,10 +1,4 @@
-library(lubridate)
-library(assertthat)
-library(DMwR)
-library(shinyBS)
-library(shinythemes)
-library(shiny)
-library(ggplot2)
+
 # main script calling all other scripts
 
 #run data_cleaning
