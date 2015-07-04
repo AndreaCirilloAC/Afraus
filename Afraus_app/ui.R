@@ -5,7 +5,7 @@ library(shinyBS)
 library(shinythemes)
 library(shiny)
 library(ggplot2)
-library(RCurl)
+
 
 shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, width = 25),id="bar",
                    
