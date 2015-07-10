@@ -85,6 +85,7 @@ output$afraus_plot_cor_mod <- renderPlot({
       data <- read.table("demo.csv",header=TRUE,sep=";")}else{
         data <- data.frame(path())}
     isolate({ source("main.R",local =TRUE, verbose = TRUE)})
+    
     m <- ggplot(data, aes(x=date,y=afraus_score,color=value))
     m +  geom_point(shape=1)
   }
@@ -95,6 +96,28 @@ observe({
   if(input$gofind){
 updateTabsetPanel(session, "bar", selected = "Find the Fraud")
 }
- 
+
+})
+# instruction to make the 'discover more about the math' link work
+observe({
+  if (input$math){updateTabsetPanel(session, "bar", selected = "How it works")}
+})
+# details table code
+# table is showed only after afraus_score computation
+output$details <- renderDataTable({
+  if (input$findbutton) {
+    if ( input$demo == TRUE) {
+      data <- read.table("demo.csv",header = TRUE,sep =";")}else{
+        data <- data.frame(path())}
+    isolate({ source("main.R",local = TRUE, verbose = TRUE)})
+    data <- data.frame("date" = data$date,"value" = data$value,"afraus_score"=data$afraus_score)
+    data <- subset(data,data$afraus_score>0.5)
+    data <- data[order(data$afraus_score,decreasing = TRUE),]}
+  
+     return(data)
+  })
+observe({
+ if (input$findbutton) {
+updateCollapse(session,"collapser",open = c('results'))}
 })
 })
