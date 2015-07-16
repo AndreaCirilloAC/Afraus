@@ -23,6 +23,7 @@ fraud schemes affecting the tested population, and no further specification by t
 
 ## Further Developments
 
-I am Currently working on a web application that will let users test their custom population with Afraus, just pressing a 'show me the fraud' button.
+Afraus leading principles of development are:
 
-More generally, Afraus could be used on each analysis were search for frauds/anomalies is implied.
+- *complementarity*: if two models of different families can catch two different fraud scheems, joining togheter can lead to a wider detection range
+- *dinamicity*: we can teach the algorithm to choose among different fraud detection models depending on data features, without requiring any user specification
