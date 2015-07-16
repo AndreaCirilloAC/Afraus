@@ -1,8 +1,5 @@
 name: Afraus_app
 account: afraus
+bundleId: 180042
+url: http://afraus.shinyapps.io/Afraus_app
 server: shinyapps.io
-bundleId: 204760
-url: https://afraus.shinyapps.io/Afraus_app
-when: 1434572314.04782
-asMultiple: FALSE
-asStatic: FALSE
