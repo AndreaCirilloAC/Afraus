@@ -26,4 +26,4 @@ fraud schemes affecting the tested population, and no further specification by t
 Afraus leading principles of development are:
 
 - *complementarity*: if two models of different families can catch two different fraud scheems, joining togheter can lead to a wider detection range
-- *dimanicity*: we can teach the algorithm to choose among different fraud detection models depending on data features, without requiring any user specification
+- *dinamicity*: we can teach the algorithm to choose among different fraud detection models depending on data features, without requiring any user specification
