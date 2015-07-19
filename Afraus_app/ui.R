@@ -12,7 +12,7 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
               #HOME PANEL     
                    
                    tabPanel("home",
-                                  
+                                
                    div(style = " text-align: center;",
                        h3("Fraud costs the world 3.7 trillion every year."),
                        h2("Afraus brings to you the power of data analysis and lets you discover frauds
@@ -25,22 +25,22 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
                        ),                   
                    br(),
                    br(),
-                   div(style=" text-align: center;",                             
-                              bsButton("gofind", label="find the fraud",  style = "warning",
+                   div(style = "text-align: center;",                             
+                              bsButton("gofind", label = "find the fraud",  style = "warning",
                                        size = "large", disabled = FALSE
                                        )),
                    br(),br(),br(),br(),br(),br(),
-                   div(style=" text-align: center;",                  
+                   div(style= "text-align: center;",                  
                        fluidRow(
                        column(4,
-                       img(src = "upload.png", height = 100, width = 100,align="center"),
+                       img(src = "upload.png", height = 100, width = 100,align = "center"),
                        h3("1. Load your data into Afraus (privacy mode on)")),
                        column(4,
-                       img(src = "pulse.png", height = 100, width = 100,align="center"),
+                       img(src = "pulse.png", height = 100, width = 100,align = "center"),
                    h3("2. Find if any fraud may be occuring")),
                    
                    column(4,
-                   img(src = "paper.png", height = 100, width = 100,align="center"),
+                   img(src = "paper.png", height = 100, width = 100,align = "center"),
                    
                    h3("3. Discover which records may be affected by fraud")
                  )),
@@ -54,7 +54,7 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
                    
                    tabPanel("Find the Fraud",
                             div(
-                              style=" text-align: center;",
+                              style = " text-align: center;",
                               h1("Apply Afraus to your data")),
                             br(),br(),br(),br(), br(),
                             fluidRow(     
