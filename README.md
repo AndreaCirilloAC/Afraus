@@ -2,7 +2,7 @@
 ##An unsupervised multi-model fraud-detection algorithm
 try it at https://afraus.shinyapps.io/Afraus_app/
 
-<img src="https://s3.eu-central-1.amazonaws.com/webpicturesac/immagine1.png">
+
 
 Afraus is builted on three unsupervised models:
 
