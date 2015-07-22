@@ -92,14 +92,10 @@ observe({
 # table is showed only after afraus_score computation
 output$details <- renderDataTable({
   if (input$findbutton) {
-    if ( input$demo == TRUE) {
-      data <- read.table("demo.csv",header = TRUE,sep =";")}else{
-        data <- data.frame(path())}
-    isolate({ source("main.R",local = TRUE, verbose = TRUE)})
+    data <- wrangled_data()
     data <- data.frame("date" = data$date,"value" = data$value,"afraus_score"=data$afraus_score)
     data <- subset(data,data$afraus_score>0.5)
     data <- data[order(data$afraus_score,decreasing = TRUE),]}
-  
      return(data)
   })
 observe({
