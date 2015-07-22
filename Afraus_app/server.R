@@ -46,11 +46,8 @@ output$response     <- renderText({
 output$probability <- renderText({
   if (input$findbutton == 0) return()else{
 {
-  if(input$demo==TRUE){
-    data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-  data <- data.frame(path())}
-  isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-  paste(round(median(data$afraus_score)*100,0),"%",sep="")}}
+  
+  paste(round(median(wrangled_data()$afraus_score)*100,0),"%",sep="")}}
 })  
 # plot representing afraus_score distribution
   output$afraus_plot <- renderPlot({
