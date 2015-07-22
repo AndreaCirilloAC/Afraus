@@ -21,17 +21,24 @@ observe({
          file <-  input$load   
          file <- read.table(file$datapath,header= TRUE,sep=";")}          
   })
+  
+  wrangled_data <- reactive({
+    if (input$findbutton == 0) return()else{
+      
+        if(input$demo==TRUE){
+          data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+            data <- data.frame(path())}
+        isolate({ source("main.R",local =TRUE, verbose = TRUE)})}
+    return(data)
+  })
 # instruction to obtain the general response and the overall probability
 # response
 
 output$response     <- renderText({
   if (input$findbutton == 0) return()else{
 {
-  if(input$demo==TRUE){
-    data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-      data <- data.frame(path())}
-  isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-  if(sum(data$afraus_score)>0){return(c("Fraud may be occuring on your data"))}
+  
+  if(sum(wrangled_data()$afraus_score)>0){return(c("Fraud may be occuring on your data"))}
   else{("Afraus didn't find any fraus track")}
 }
   }})

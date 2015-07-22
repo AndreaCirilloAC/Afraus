@@ -17,11 +17,11 @@ data[,1] <- as.Date(data[,1])
 #}
 
 #dates on first column?
-if(is.numeric(data[,1])==FALSE & is.date(data[1,1])==FALSE){
-  stop(paste("the loaded dataset doestn't contain neither dates nor numbers 
-on the second column. 
-Please provide a dataset with numbers on that column"))
-}
+#if(is.numeric(data[,1])==FALSE & is.date(data[1,1])==FALSE){
+#  stop(paste("the loaded dataset doestn't contain neither dates nor numbers 
+#on the second column. 
+#Please provide a dataset with numbers on that column"))
+#}
     #numbers on second column?
 if(is.numeric(data[,2])==FALSE){
   stop(paste("the loaded dataset doestn't contain numbers on the second column. 
