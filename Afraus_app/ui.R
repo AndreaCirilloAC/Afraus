@@ -249,7 +249,7 @@ shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, wi
               #SCRIPTS
               
                    tags$head(includeScript("analytics.js"))  ,
-                   includeScript("jivo.js"),  
+                   
                    windowTitle = "Afraus"
   
   ))
