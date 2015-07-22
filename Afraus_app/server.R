@@ -53,9 +53,9 @@ output$probability <- renderText({
   output$afraus_plot <- renderPlot({
       if(input$findbutton == 0)return()else{
        
-         m    <- ggplot(wrangled_data(), aes(x=afraus_score ))
+         m    <- ggplot(wrangled_data(), aes(x = afraus_score ))
          m + 
-         geom_histogram(aes(fill = ..count..))+
+         geom_histogram(aes(fill = ..count..)) +
          geom_density()
        
       
@@ -63,23 +63,16 @@ output$probability <- renderText({
 })
 output$afraus_plot_cor <- renderPlot({ 
   if(input$findbutton){
-    if(input$demo==TRUE){
-      data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-        data <- data.frame(path())}
-    isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-    m <- ggplot(data, aes(x=afraus_score,y=value,color=value))
+    
+    m <- ggplot(wrangled_data(), aes(x=afraus_score,y=value,color=value))
     m +  geom_point(shape=1)
   }
 })
 output$afraus_plot_cor_mod <- renderPlot({
   
   if(input$findbutton == 0)return()else{
-    if(input$demo==TRUE){
-      data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-        data <- data.frame(path())}
-    isolate({ source("main.R",local =TRUE, verbose = TRUE)})
     
-    m <- ggplot(data, aes(x=date,y=afraus_score,color=value))
+    m <- ggplot(wrangled_data(), aes(x=date,y=afraus_score,color=value))
     m +  geom_point(shape=1)
   }
 })
