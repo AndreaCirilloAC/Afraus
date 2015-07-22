@@ -4,7 +4,7 @@ library(shinyBS)
 library(shinythemes)
 library(shiny)
 library(ggplot2)
-library(RCurl)
+
 # http://stackoverflow.com/questions/26547589/insert-a-link-into-the-navbar-in-shiny
 
 shinyUI(navbarPage(theme = "bootstrap.css",img(src = "logo.png", height = 25, width = 25) ,id ="bar",
