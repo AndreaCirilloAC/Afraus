@@ -21,17 +21,24 @@ observe({
          file <-  input$load   
          file <- read.table(file$datapath,header= TRUE,sep=";")}          
   })
+  
+  wrangled_data <- reactive({
+    if (input$findbutton == 0) return()else{
+      
+        if(input$demo==TRUE){
+          data <- read.table("demo.csv",header=TRUE,sep=";")}else{
+            data <- data.frame(path())}
+        isolate({ source("main.R",local =TRUE, verbose = TRUE)})}
+    return(data)
+  })
 # instruction to obtain the general response and the overall probability
 # response
 
 output$response     <- renderText({
   if (input$findbutton == 0) return()else{
 {
-  if(input$demo==TRUE){
-    data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-      data <- data.frame(path())}
-  isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-  if(sum(data$afraus_score)>0){return(c("Fraud may be occuring on your data"))}
+  
+  if(sum(wrangled_data()$afraus_score)>0){return(c("Fraud may be occuring on your data"))}
   else{("Afraus didn't find any fraus track")}
 }
   }})
@@ -39,54 +46,33 @@ output$response     <- renderText({
 output$probability <- renderText({
   if (input$findbutton == 0) return()else{
 {
-  if(input$demo==TRUE){
-    data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-  data <- data.frame(path())}
-  isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-  paste(round(median(data$afraus_score)*100,0),"%",sep="")}}
+  
+  paste(round(median(wrangled_data()$afraus_score)*100,0),"%",sep="")}}
 })  
 # plot representing afraus_score distribution
   output$afraus_plot <- renderPlot({
       if(input$findbutton == 0)return()else{
-       withProgress(message= 'Afraus is working',
-                     detail = 'calculation time depends on data size',value = 0,{
-        if(input$demo==TRUE){
-          
-          data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-            data <- data.frame(path())}
-        incProgress(30)
-         isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-        incProgress(70)
-         m    <- ggplot(data, aes(x=afraus_score ))
-        incProgress(100)
-        
-        Sys.sleep(0.5)
+       
+         m    <- ggplot(wrangled_data(), aes(x = afraus_score ))
          m + 
-         geom_histogram(aes(fill = ..count..))+
+         geom_histogram(aes(fill = ..count..)) +
          geom_density()
        
-       })
+      
   }
 })
 output$afraus_plot_cor <- renderPlot({ 
   if(input$findbutton){
-    if(input$demo==TRUE){
-      data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-        data <- data.frame(path())}
-    isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-    m <- ggplot(data, aes(x=afraus_score,y=value,color=value))
+    
+    m <- ggplot(wrangled_data(), aes(x=afraus_score,y=value,color=value))
     m +  geom_point(shape=1)
   }
 })
 output$afraus_plot_cor_mod <- renderPlot({
   
   if(input$findbutton == 0)return()else{
-    if(input$demo==TRUE){
-      data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-        data <- data.frame(path())}
-    isolate({ source("main.R",local =TRUE, verbose = TRUE)})
     
-    m <- ggplot(data, aes(x=date,y=afraus_score,color=value))
+    m <- ggplot(wrangled_data(), aes(x=date,y=afraus_score,color=value))
     m +  geom_point(shape=1)
   }
 })
@@ -106,14 +92,10 @@ observe({
 # table is showed only after afraus_score computation
 output$details <- renderDataTable({
   if (input$findbutton) {
-    if ( input$demo == TRUE) {
-      data <- read.table("demo.csv",header = TRUE,sep =";")}else{
-        data <- data.frame(path())}
-    isolate({ source("main.R",local = TRUE, verbose = TRUE)})
+    data <- wrangled_data()
     data <- data.frame("date" = data$date,"value" = data$value,"afraus_score"=data$afraus_score)
     data <- subset(data,data$afraus_score>0.5)
     data <- data[order(data$afraus_score,decreasing = TRUE),]}
-  
      return(data)
   })
 observe({
