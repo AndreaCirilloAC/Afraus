@@ -52,24 +52,13 @@ output$probability <- renderText({
 # plot representing afraus_score distribution
   output$afraus_plot <- renderPlot({
       if(input$findbutton == 0)return()else{
-       withProgress(message= 'Afraus is working',
-                     detail = 'calculation time depends on data size',value = 0,{
-        if(input$demo==TRUE){
-          
-          data <- read.table("demo.csv",header=TRUE,sep=";")}else{
-            data <- data.frame(path())}
-        incProgress(30)
-         isolate({ source("main.R",local =TRUE, verbose = TRUE)})
-        incProgress(70)
-         m    <- ggplot(data, aes(x=afraus_score ))
-        incProgress(100)
-        
-        Sys.sleep(0.5)
+       
+         m    <- ggplot(wrangled_data(), aes(x=afraus_score ))
          m + 
          geom_histogram(aes(fill = ..count..))+
          geom_density()
        
-       })
+      
   }
 })
 output$afraus_plot_cor <- renderPlot({ 
