@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+#<<<<<<< HEAD
 
 # data cleaning script, taking user-data.frame and giving a data.frame 
 # usable for afraus score
@@ -35,7 +35,7 @@ if ( ncol(data)==3){
 colnames(data) <- c("date","value","test")
 }else{
   colnames(data) <- c("date","value")}
-=======
+#=======
 
 # data cleaning script, taking user-data.frame and giving a data.frame 
 # usable for afraus score
@@ -72,4 +72,4 @@ if ( ncol(data)==3){
 colnames(data) <- c("date","value","test")
 }else{
   colnames(data) <- c("date","value")}
->>>>>>> extract_sourcing
+#>>>>>>> extract_sourcing
