@@ -1,6 +1,6 @@
 # Afraus
 ##An unsupervised multi-model fraud-detection algorithm
-try it at http://ec2-52-3-148-193.compute-1.amazonaws.com:3838/
+try it at https://afraus.shinyapps.io/Afraus_app
 
 <img src = "https://s3.eu-central-1.amazonaws.com/webpicturesac/immagine1.png">
 
